@@ -1,27 +1,53 @@
 <script setup lang="ts">
 import { useSingleSessionStore } from '../stores/store'
+import type { Question } from './QuizQuestions.vue'
 
 const currentSession = useSingleSessionStore()
+
+function isCorrectAnswer(answerKey: string, question: Question) {
+  if (
+    (answerKey === question.selectedAnswer && question.isCorrect) ||
+    answerKey === question.correctAnswer
+  )
+    return 'correct'
+  if (answerKey === question.selectedAnswer && !question.isCorrect) return 'incorrect'
+  return null
+}
 </script>
 
 <template>
-  <h1>Your score:</h1>
-  <div class="radial-progress text-primary" :style="{ '--value': currentSession.sessionScore }">
-    {{ `${currentSession.sessionScore}%` }}
+  <div
+    class="mb-5 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100"
+  ></div>
+  <h1 class="text-3xl pb-5 font-bold text-center">Your score:</h1>
+  <div class="flex justify-center">
+    <div
+      class="radial-progress text-accent text-lg"
+      :style="{ '--value': currentSession.sessionScore }"
+    >
+      {{ `${currentSession.sessionScore}%` }}
+    </div>
   </div>
-  <div>Date: {{ currentSession.date }}</div>
-  <div>Category: {{ currentSession.sessionCategory }}</div>
-  <h2>Questions:</h2>
-  <div v-for="(question, index) in currentSession.sessionQuestions" :key="index">
-    <div>{{ question.question }}</div>
-    <div v-for="(answer, ansIndex) in question.answers" :key="ansIndex">
-      {{ answer }}
+  <div class="m-5">
+    <div v-for="(question, key) in currentSession.sessionQuestions" :key="key">
+      <h2 class="text-xl font-bold pb-4">{{ `Question ${key + 1}` }}</h2>
+      <p class="text-lg pb-3">{{ question.question }}</p>
+      <div class="mb-4">
+        <div
+          v-for="(answer, index) in question.answers"
+          :key="index"
+          :class="{
+            'bg-green-700': isCorrectAnswer(index, question) === 'correct',
+            'bg-red-900': isCorrectAnswer(index, question) === 'incorrect'
+          }"
+          class="flex items-center pl-4 py-1.5 border rounded-2xl border-gray-700 mb-1.5"
+        >
+          <p class="text-base">
+            {{ answer }}
+          </p>
+          <div>{{ isCorrectAnswer(answer, question) }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
-
-<!-- <style scoped>
-.correct {
-  color: greenyellow;
-}
-</style> -->

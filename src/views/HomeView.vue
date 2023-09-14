@@ -20,8 +20,7 @@ function goToScores() {
         <img class="h-90" :src="welcome" alt="Image with astronaut and moon" />
         <h1 class="text-4xl font-bold">Welcome to tech quizzes!</h1>
         <p class="py-6">
-          Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
-          exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
+          Test your technical knowledge by solving a quiz based on a chosen tech category.
         </p>
         <div class="space-x-4">
           <button type="button" class="btn btn-outline btn-accent" @click="goToScores">Scores</button>

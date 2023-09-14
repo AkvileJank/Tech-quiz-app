@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import Header from './components/HeaderComponent.vue';
+import HeaderComp from './components/HeaderComponent.vue'
 </script>
 
 <template>
-  <Header></Header>
-  <router-view></router-view>
+  <header>
+    <HeaderComp></HeaderComp>
+  </header>
+  <main>
+    <router-view></router-view>
+  </main>
 </template>

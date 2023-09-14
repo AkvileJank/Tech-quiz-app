@@ -1,7 +1,7 @@
 import { ref } from 'vue'
-import type {Ref} from 'vue'
-import { defineStore } from 'pinia';
-import type { Question, Session} from '../views/QuizQuestions.vue'
+import type { Ref } from 'vue'
+import { defineStore } from 'pinia'
+import type { Question, Session } from '../views/QuizQuestions.vue'
 
 const useParameterStore = defineStore(
   'parameters',
@@ -12,22 +12,37 @@ const useParameterStore = defineStore(
   },
   { persist: true }
 )
-//  type Session = {
-//   date: Ref<string>,
-//   sessionScore: Ref<number>,
-//   sessionCategory: Ref<string>
-//   sessionQuestions: Ref<Question[]>
-// }
 
 const useSingleSessionStore = defineStore(
-  'currentSession', () => {
-    const currentSession: Session = {
-      date: ref(new Date().toLocaleDateString('en-CA')),
-      sessionScore: ref(0),
-      sessionCategory: ref(''),
-      sessionQuestions: ref<Question[]>([])
+  'currentSession',
+  () => {
+    const date = ref<string>(new Date().toLocaleDateString('en-CA'))
+    const sessionScore = ref(0)
+    const sessionCategory = ref('')
+    const sessionQuestions = ref<Question[]>([])
+
+    function selectNewSession(session: Session) {
+      date.value = session.date
+      sessionScore.value = session.sessionScore
+      sessionCategory.value = session.sessionCategory
+      sessionQuestions.value = session.sessionQuestions
     }
-    return currentSession
+    function createSessionObject(): Session {
+      return {
+        date: date.value,
+        sessionScore: sessionScore.value,
+        sessionCategory: sessionCategory.value,
+        sessionQuestions: sessionQuestions.value
+      }
+    }
+    return {
+      date,
+      sessionScore,
+      sessionCategory,
+      sessionQuestions,
+      selectNewSession,
+      createSessionObject
+    }
   },
   { persist: true }
 )
@@ -37,12 +52,11 @@ const useAllSessionsStore = defineStore(
   () => {
     const allSessions: Ref<Session[]> = ref([])
     function addLastSession(session: Session) {
-        allSessions.value.push(session)
+      allSessions.value.push(session)
     }
-    return {allSessions, addLastSession}
+    return { allSessions, addLastSession }
   },
   { persist: true }
 )
-
 
 export { useParameterStore, useSingleSessionStore, useAllSessionsStore }
