@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import welcome from './welcome.svg'
-import Header from '@/components/Header.vue'
 
 const router = useRouter()
 
 function goToQuizConfig() {
   router.push({ name: 'configure' })
 }
+
+function goToScores() {
+  router.push({name: 'scores'})
+}
 </script>
 
 <template>
-  <Header></Header>
   <div class="hero min-h-screen bg-base-200">
     <div class="hero-content text-center">
       <div class="max-w-md">
@@ -22,7 +24,7 @@ function goToQuizConfig() {
           exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
         </p>
         <div class="space-x-4">
-          <button type="button" class="btn btn-outline btn-accent">Scores</button>
+          <button type="button" class="btn btn-outline btn-accent" @click="goToScores">Scores</button>
           <button type="button" class="btn btn-outline btn-secondary" @click="goToQuizConfig">
             Take quiz
           </button>
