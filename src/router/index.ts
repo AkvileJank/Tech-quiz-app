@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import ConfigureQuiz from '../views/ConfigureQuiz.vue'
-import ScoresView from '../views/ScoresView.vue'
-import QuizQuestions from '../views/QuizQuestions.vue'
-import QuizResult from '../views/QuizResult.vue'
+import HomeView from '../views/home/HomeView.vue'
+import ConfigureQuiz from '../views/quizConfig/ConfigureQuiz.vue'
+import ScoresView from '@/views/scores/ScoresView.vue'
+import QuizQuestions from '@/views/questionsDisplay/QuizQuestions.vue'
+import QuizResult from '@/views/result/QuizResult.vue'
+import ErrorDisplay from '@/views/questionsDisplay/error/ErrorDisplay.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/result',
       name: 'result',
       component: QuizResult
+    },
+    {
+      path: '/error',
+      name: 'error',
+      component: ErrorDisplay
     }
   ]
 })

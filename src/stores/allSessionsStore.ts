@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Session } from '@/views/QuizQuestions.vue'
 
+
 const useAllSessionsStore = defineStore(
   'allSessions',
   () => {

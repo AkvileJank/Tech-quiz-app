@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import router from '@/router'
 import singleSessionStore from '@/stores/singleSessionStore'
-import parameterStore from '../stores/parameterStore'
+import parameterStore from '@/stores/parameterStore'
 import allSessionsStore from '@/stores/allSessionsStore'
 
 type QuestionData = {
@@ -27,14 +27,14 @@ export type Session = {
   sessionCategory: string
   sessionQuestions: Question[]
 }
-
 type SelectedAnswers = Record<number, string | undefined>
+// to load everything on the page once questions are fetched from API
 const dataLoaded = ref(false)
 
 const questions = ref<Question[]>([])
 const { category, limit } = storeToRefs(parameterStore())
-const apiURL = 'https://quizapi.io/api/v1/questions'
-const apiKey = 'VNMXw5m0h0MeN7ILXS77Svnp18JIzDxHCdxnZt9g'
+const apiURL: string = import.meta.env.VITE_API_URL
+const apiKey: string = import.meta.env.VITE_API_KEY
 
 // const showData = ref(true)
 const questionsData = ref<QuestionData[]>([])
@@ -55,6 +55,7 @@ const fetchQuizQuestions = async (chosenCategory: string, chosenLimit: number) =
     return data
   } catch (error) {
     console.error('Error fetching quiz questions:', error)
+    router.push({name: 'error'})
   }
 }
 
@@ -143,7 +144,7 @@ onMounted(async () => {
               :name="`question_${question.id}`"
               :value="index"
               v-model="selectedAnswers[question.id]"
-              @change="totalAnswered+=1"
+              @change="totalAnswered += 1"
               class="radio radio-secondary radio-sm py-1"
             />
             {{ answer }}
@@ -152,7 +153,12 @@ onMounted(async () => {
       </div>
     </div>
     <div class="flex justify-center mb-5">
-      <button :disabled="totalAnswered !== questions.length" type="button" class="btn btn-secondary" @click="onSubmit">
+      <button
+        :disabled="totalAnswered !== questions.length"
+        type="button"
+        class="btn btn-secondary"
+        @click="onSubmit"
+      >
         Finish quiz
       </button>
     </div>
