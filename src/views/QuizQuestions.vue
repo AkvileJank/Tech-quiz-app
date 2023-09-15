@@ -2,7 +2,9 @@
 import { ref, onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import router from '@/router'
-import { useParameterStore, useSingleSessionStore, useAllSessionsStore } from '../stores/store'
+import singleSessionStore from '@/stores/singleSessionStore'
+import parameterStore from '../stores/parameterStore'
+import allSessionsStore from '@/stores/allSessionsStore'
 
 type QuestionData = {
   id: number
@@ -27,11 +29,10 @@ export type Session = {
 }
 
 type SelectedAnswers = Record<number, string | undefined>
-const dataLoaded= ref(false)
-const parameterStore = useParameterStore()
+const dataLoaded = ref(false)
 
 const questions = ref<Question[]>([])
-const { category, limit } = storeToRefs(parameterStore)
+const { category, limit } = storeToRefs(parameterStore())
 const apiURL = 'https://quizapi.io/api/v1/questions'
 const apiKey = 'VNMXw5m0h0MeN7ILXS77Svnp18JIzDxHCdxnZt9g'
 
@@ -73,9 +74,8 @@ const correctAnswersCount = computed(() => {
   const percentage = (count / questions.value.length) * 100
   return Math.round(percentage)
 })
-const allSessionsStore = useAllSessionsStore()
-const singleSessionStore = useSingleSessionStore()
-const { sessionScore, sessionCategory, sessionQuestions } = storeToRefs(singleSessionStore)
+
+const { sessionScore, sessionCategory, sessionQuestions } = storeToRefs(singleSessionStore())
 
 function updateSession() {
   sessionScore.value = correctAnswersCount.value
@@ -85,10 +85,12 @@ function updateSession() {
 
 function onSubmit() {
   updateSession()
-  const sessionObj = singleSessionStore.createSessionObject()
-  allSessionsStore.addLastSession(sessionObj)
+  const sessionObj = singleSessionStore().createSessionObject()
+  allSessionsStore().addLastSession(sessionObj)
   router.push({ name: 'result' })
 }
+
+const totalAnswered = ref(0)
 
 onMounted(async () => {
   questionsData.value = await fetchQuizQuestions(category.value, limit.value)
@@ -141,8 +143,8 @@ onMounted(async () => {
               :name="`question_${question.id}`"
               :value="index"
               v-model="selectedAnswers[question.id]"
+              @change="totalAnswered+=1"
               class="radio radio-secondary radio-sm py-1"
-              required
             />
             {{ answer }}
           </label>
@@ -150,7 +152,9 @@ onMounted(async () => {
       </div>
     </div>
     <div class="flex justify-center mb-5">
-      <button type="button" class="btn btn-secondary" @click="onSubmit">Finish quiz</button>
+      <button :disabled="totalAnswered !== questions.length" type="button" class="btn btn-secondary" @click="onSubmit">
+        Finish quiz
+      </button>
     </div>
   </div>
 </template>

@@ -1,17 +1,6 @@
-import { ref } from 'vue'
-import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 import type { Question, Session } from '../views/QuizQuestions.vue'
-
-const useParameterStore = defineStore(
-  'parameters',
-  () => {
-    const category = ref('')
-    const limit = ref(0)
-    return { category, limit }
-  },
-  { persist: true }
-)
 
 const useSingleSessionStore = defineStore(
   'currentSession',
@@ -47,16 +36,4 @@ const useSingleSessionStore = defineStore(
   { persist: true }
 )
 
-const useAllSessionsStore = defineStore(
-  'allSessions',
-  () => {
-    const allSessions: Ref<Session[]> = ref([])
-    function addLastSession(session: Session) {
-      allSessions.value.push(session)
-    }
-    return { allSessions, addLastSession }
-  },
-  { persist: true }
-)
-
-export { useParameterStore, useSingleSessionStore, useAllSessionsStore }
+export default useSingleSessionStore

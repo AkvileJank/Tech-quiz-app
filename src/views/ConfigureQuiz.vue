@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import router from '@/router'
-import { useParameterStore } from '../stores/store'
+import parameterStore from '@/stores/parameterStore'
 
-const parameterStore = useParameterStore()
-const { category, limit } = storeToRefs(parameterStore)
+const { category, limit } = storeToRefs(parameterStore())
 
 function goToQuiz() {
   router.push({ name: 'quiz' })
@@ -39,8 +38,14 @@ function goToQuiz() {
       <label for="category" class="label">
         <span class="label-text text-lg">Choose amount of questions:</span>
       </label>
-      <div class="text-xl mt-5"> {{ limit }}</div>
-      <input type="range" min="1" max="20" v-model="limit" class="range range-secondary w-60 mt-3" />
+      <div class="text-xl mt-5">{{ limit }}</div>
+      <input
+        type="range"
+        min="1"
+        max="20"
+        v-model="limit"
+        class="range range-secondary w-60 mt-3"
+      />
     </div>
     <div class="mt-12 mb-5 grid h-20 card place-items-center">
       <button type="button" class="btn btn-outline btn-secondary" @click="goToQuiz">
@@ -49,4 +54,4 @@ function goToQuiz() {
     </div>
   </div>
 </template>
-../stores/store
+../stores/store ../stores/parameterStore

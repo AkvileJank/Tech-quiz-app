@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { useSingleSessionStore } from '../stores/store'
+import SingleSessionStore from '../stores/singleSessionStore'
 import type { Question } from './QuizQuestions.vue'
+import router from '@/router';
+import ReturnHomeButton from '@/components/ReturnHomeButton.vue';
 
-const currentSession = useSingleSessionStore()
+const currentSession = SingleSessionStore()
 
 function isCorrectAnswer(answerKey: string, question: Question) {
   if (
@@ -49,5 +51,6 @@ function isCorrectAnswer(answerKey: string, question: Question) {
         </div>
       </div>
     </div>
+    <ReturnHomeButton :router="router"></ReturnHomeButton>
   </div>
 </template>
