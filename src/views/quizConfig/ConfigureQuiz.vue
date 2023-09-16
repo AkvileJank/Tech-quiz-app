@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import router from '@/router'
+import parameterStore from '@/stores/parameterStore'
 import CategorySelection from './CategorySelection.vue'
 import LimitRange from './LimitRange.vue'
+
+function isButtonDisabled() {
+  if (!parameterStore() || parameterStore().category === '' || parameterStore().limit === 0)
+    return true
+  return false
+}
 
 function goToQuiz() {
   router.push({ name: 'quiz' })
@@ -16,7 +23,7 @@ function goToQuiz() {
     <div class="mb-5 grid gap-y-10 card place-items-center">
       <CategorySelection />
       <LimitRange />
-      <button type="button" class="btn btn-outline btn-secondary" @click="goToQuiz">
+      <button :disabled="isButtonDisabled()" type="button" class="btn btn-outline btn-secondary" @click="goToQuiz">
         Start quiz
       </button>
     </div>

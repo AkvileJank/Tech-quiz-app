@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import singleSessionStore from '@/stores/singleSessionStore'
-import type { Question } from '../QuizQuestions.vue'
+import QuestionText from '@/components/QuestionText.vue'
+import type { Question } from '../questionsDisplay/QuizQuestions.vue'
 
 const currentSession = singleSessionStore()
 
@@ -15,9 +16,8 @@ function isCorrectAnswer(answerKey: string, question: Question) {
 }
 </script>
 <template>
-  <div v-for="(question, key) in currentSession.sessionQuestions" :key="key">
-    <h2 class="text-xl font-bold pb-4">{{ `Question ${key + 1}` }}</h2>
-    <p class="text-lg pb-3">{{ question.question }}</p>
+  <div v-for="(question, key) in currentSession.sessionQuestions" :key="key" data-testid="questionsAnswersDisplay">
+    <QuestionText :question="question" :obj-key="key" />
     <div class="mb-4">
       <div
         v-for="(answer, index) in question.answers"

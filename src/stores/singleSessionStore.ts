@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { Question, Session } from '../views/QuizQuestions.vue'
+import type { Question, Session } from '@/views/questionsDisplay/QuizQuestions.vue'
 
 const useSingleSessionStore = defineStore(
   'currentSession',

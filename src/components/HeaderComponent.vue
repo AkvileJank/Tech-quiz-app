@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
-import {useRoute} from 'vue-router'
-import {computed} from 'vue'
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
 const route = useRoute()
-const hideButtonPaths = ['/configure','/quiz']
+const hideButtonPaths = ['/configure', '/quiz']
 
 const showButton = computed(() => {
   return !hideButtonPaths.includes(route.path)

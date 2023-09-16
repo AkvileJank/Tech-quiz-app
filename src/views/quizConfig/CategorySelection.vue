@@ -7,7 +7,7 @@ const { category } = storeToRefs(parameterStore())
 
 <template>
   <div class="form-control w-full max-w-xs flex flex-col">
-    <label for="category" class="label">
+    <label for="category" class="label" data-testid="categorySelector">
       <span class="label-text text-lg">Category:</span>
     </label>
     <select
@@ -18,7 +18,6 @@ const { category } = storeToRefs(parameterStore())
       <option disabled selected>Select category for quiz</option>
       <option>Randomize</option>
       <option>Linux</option>
-      <option>BASH</option>
       <option>Docker</option>
       <option>DevOps</option>
     </select>

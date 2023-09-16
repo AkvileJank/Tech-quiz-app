@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import SingleSessionStore from '@/stores/singleSessionStore'
+
+defineProps<{
+  sessionScore: number
+}>()
 
 const route = useRoute()
 function getSize() {
@@ -8,17 +11,16 @@ function getSize() {
   return '4rem'
 }
 
-const currentSession = SingleSessionStore()
 </script>
 
 <template>
-  <div class="flex justify-center">
+  <div class="flex justify-center" data-testid="score">
     <div
       class="radial-progress text-accent"
-      :style="{ '--value': currentSession.sessionScore, '--size': getSize() }"
-      :class="[route.name === 'result' ? 'text-lg' : 'text-sm']"
+      :style="{ '--value': sessionScore, '--size': getSize() }"
+      :class="[route.name === 'result' ? 'text-lg' : 'text-xs']"
     >
-      {{ `${currentSession.sessionScore}%` }}
+      {{ `${sessionScore}%` }}
     </div>
   </div>
 </template>

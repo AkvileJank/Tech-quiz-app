@@ -2,8 +2,8 @@
 import { ref, onMounted } from 'vue'
 import singleSessionStore from '@/stores/singleSessionStore'
 import router from '@/router'
-import type { Session } from '@/views/QuizQuestions.vue'
 import ScorePercentage from '@/components/ScorePercentage.vue'
+import type { Session } from '../questionsDisplay/QuizQuestions.vue'
 
 const props = defineProps<{
   allSessions: Session[]
@@ -42,7 +42,7 @@ onMounted(() => {
           <div>
             <label for="score-bar">Score:</label>
           </div>
-          <ScorePercentage />
+          <ScorePercentage :sessionScore="session.sessionScore" />
           <div class="flex items-center">Date: {{ session.date }}</div>
         </div>
         <div class="flex md:justify-end items-center">

@@ -12,8 +12,8 @@ function goToScores() {
 
 <template>
   <div class="space-x-4">
-    <button type="button" class="btn btn-outline btn-accent" @click="goToScores">Scores</button>
-    <button type="button" class="btn btn-outline btn-secondary" @click="goToQuizConfig">
+    <button type="button" class="btn btn-outline btn-accent" @click="goToScores" data-testid="toScoresButton">Scores</button>
+    <button type="button" class="btn btn-outline btn-secondary" @click="goToQuizConfig" data-testid="toQuizButton">
       Take quiz
     </button>
   </div>
