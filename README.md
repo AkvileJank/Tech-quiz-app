@@ -12,7 +12,7 @@ Tech quiz app is a Vue.js web application that allows users to solve quizzes wit
 - End-to-end testing with Playwright.
 
 ## Tech Stack
-- **Frontend Framework**: Vue.js
+- **Frontend Framework**: Vue.js with Typescript
 - **Build Tool**: Vite
 - **State Management**: Pinia
 - **Styling**: Tailwind CSS with Daisy UI library
