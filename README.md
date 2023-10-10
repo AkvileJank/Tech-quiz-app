@@ -1,7 +1,7 @@
 # Tech quiz app
 
 ## Description
-Tech quiz app is a Vue.js web application that allows users to solve quizzes with questions that are fetched from the 'https://quizapi.io/api/v1/questions' API. Users can see their final scores upon completing a quiz and review previous quizes. The app uses VueRouter for routing, Pinia store for state management, and local storage for data storage and retrieval.
+Tech quiz app is a Vue.js web application that allows users to solve quizzes with questions that are fetched from the https://quizapi.io/api/v1/questions API. Users can see their final scores upon completing a quiz and review previous quizes. The app uses VueRouter for routing, Pinia store for state management, and local storage for data storage and retrieval.
 
 ## Features
 - Interactive quiz solving.
