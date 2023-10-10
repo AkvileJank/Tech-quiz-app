@@ -29,12 +29,7 @@ Tech quiz app is a Vue.js web application that allows users to solve quizzes wit
    git clone <repository_url>
    ```
 
-2. Change into the project directory:
-   ```
-   cd quizzy-app
-   ```
-
-3. Install project dependencies:
+2. Install project dependencies:
    ```
    npm install
 
